@@ -1,0 +1,48 @@
+{% block extra_scripts %}
+<script src="//cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.7.0/vis.min.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+<h1>PiMP ER Diagrams</h1>
+<p>
+    You can customise this page in mytemplates/django_spaghetti/plate.html.
+</p>
+<div id="visualization"></div>
+<script>
+  var nodes = new vis.DataSet(
+      {{ meatballs|safe }}
+  );
+  var edges = new vis.DataSet(
+      {{ spaghetti|safe }}
+  );
+  var data = {
+    nodes: nodes,
+    edges: edges
+  };
+  var container = document.getElementById('visualization');
+  var options = {
+    "edges": {
+      "smooth": {
+        "type": "cubicBezier",
+        "roundness": 0.55
+      }
+    },
+
+    "layout": {
+        randomSeed: undefined,
+        improvedLayout:true,
+        hierarchical: {
+          enabled:false,
+          levelSeparation: 150,
+          nodeSpacing: 1,
+          treeSpacing: 10,
+          blockShifting: true,
+          edgeMinimization: true,
+          parentCentralization: true,
+          direction: 'UD',        // UD, DU, LR, RL
+          sortMethod: 'hubsize'   // hubsize, directed
+        }
+    },
+  };
+  var timeline = new vis.Network(container, data, options);
+</script>

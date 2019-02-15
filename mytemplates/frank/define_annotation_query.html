@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block content %}
+
+        <h4>Define Annotation Query Parameters for {{annotation_tool.name}}</h4>
+
+        <form id="annotation_query_form" method="post" action="{% url 'define_annotation_query' fragmentation_set.id annotation_tool.id %}">
+
+            {% csrf_token %}
+            {% for hidden in annotation_query_form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+
+            {% if annotation_tool.name|stringformat:"s" == 'Mass2LDA' %}
+                {# Mass2LDA parameters layout more compressed because of the number of parameters #}
+                {% for field in annotation_query_form.visible_fields %}
+                    {{ field.errors }}
+                    <br>
+                    {{ field.help_text }}
+		    <br>
+                    {# <br>   DEBUG #}
+                    {{field.label}} {{ field }}
+                    {# <br>   DEBUG #}
+                {% endfor %}
+                <br>
+            {% else %}
+                {% for field in annotation_query_form.visible_fields %}
+                    {{ field.errors }}
+                    <br>
+                    {{ field.help_text }}
+		    <br>
+                    <br>
+                    {{field.label}} {{ field }}
+                    <br>
+                {% endfor %}
+            {% endif %}
+            <br>
+	<button class="btn btn-large btn-primary" type="submit">Retrieve Annotations</button>
+	<a href="{% url 'fragmentation_set' fragmentation_set.id %}"><input type="button" class="btn btn-large btn-primary" value ="Cancel"></input></a>
+        <br>
+	</form>
+
+{% endblock %}
