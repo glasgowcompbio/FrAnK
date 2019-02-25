@@ -14,6 +14,7 @@ import djcelery
 import logging
 from support import logging_support
 
+djcelery.setup_loader()
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -61,6 +62,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_extensions',
     'django_spaghetti',
+    'djcelery',
     'registration',
     'frank'
 )
