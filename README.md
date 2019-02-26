@@ -18,3 +18,5 @@ From a terminal, run the following commands:
 1. python manage.py migrate
 1. python manage.py createsuperuser
 1. python manage.py runserver
+
+1. N.B. This file was missing https://raw.githubusercontent.com/RonanDaly/pimp/master/venv/lib/python2.7/site-packages/pymzml/obo/psi-ms-4.0.1.obo

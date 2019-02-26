@@ -10,11 +10,10 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-import djcelery
 import logging
 from support import logging_support
 
-djcelery.setup_loader()
+CELERY_ACCEPT_CONTENT = ['pickle']
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -68,7 +67,7 @@ INSTALLED_APPS = (
 )
 
 SPAGHETTI_SAUCE = {
-  'apps':[
+  'apps': [
     'frank'
   ],
   'show_fields': False,
@@ -226,10 +225,6 @@ LOGGING = {
         },
     }
 }
-from celery.signals import setup_logging
-@setup_logging.connect
-def configure_celery_logging(**kwargs):
-    pass
 
 NOTEBOOK_ARGUMENTS = [
     '--ip', '0.0.0.0',
