@@ -442,7 +442,7 @@ def experiment_summary(request, experiment_id):
     :return: render:    Render frank/experiment.html
     """
 
-    context_dict = get_experiment_summary_context_dict(experiment_name_id)
+    context_dict = get_experiment_summary_context_dict(experiment_id)
     return render(request, 'frank/experiment.html', context_dict)
 
 
@@ -486,7 +486,7 @@ def add_experimental_condition(request, experiment_id):
 
 
 @login_required
-def condition_summary(request, experiment_name_id, condition_name_id):
+def condition_summary(request, experiment_id, condition_id):
     """
     View to display an experimental condition, the 'Condition' page
     :param request: Get request for the 'Condition' page
@@ -641,7 +641,7 @@ def create_fragmentation_set(request, experiment_id):
                 new_fragmentation_set.save()              # Begin the background process of deriving the peaks from the sample files
                 input_peak_list_to_database(experiment_id, new_fragmentation_set.id)
                 # Redirect to the the experiment page, which should display the new fragmentation set
-                url = reverse('experiment_summary', kwargs={'experiment_name_id': experiment_id})
+                url = reverse('experiment_summary', kwargs={'experiment_id': experiment_id})
                 return HttpResponseRedirect(url)
             else:
                 # However, if there are no sample files uploaded, then an error is added to the form
