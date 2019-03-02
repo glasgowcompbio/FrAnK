@@ -70,15 +70,15 @@ def get_add_experiment_context_dict(form):
     return context_dict
 
 
-def get_experiment_summary_context_dict(experiment_name_id):
+def get_experiment_summary_context_dict(experiment_id):
     """
     Method to generate the context_dictionary for the 'Experiment' page
-    :param experiment_name_id: String containing the unique id for the experiment
+    :param experiment_id: String containing the unique id for the experiment
     :return: context_dict:  The context dictionary for the page
     """
 
     # From the id, get the experiment, the associated experimental condiditions and fragmentation sets
-    experiment = Experiment.objects.get(pk=experiment_name_id)
+    experiment = Experiment.objects.get(pk=experiment_id)
     experimental_conditions = ExperimentalCondition.objects.filter(experiment=experiment)
     fragmentation_set_list = FragmentationSet.objects.filter(
         experiment=experiment
@@ -91,15 +91,15 @@ def get_experiment_summary_context_dict(experiment_name_id):
     return context_dict
 
 
-def get_add_experimental_condition_context_dict(experiment_name_id, form):
+def get_add_experimental_condition_context_dict(experiment_id, form):
     """
     Method to generate the context dictionary for the 'Add Experimental' condition page
-    :param experiment_name_id: String containing the unique id for the experiment
+    :param experiment_id: String containing the unique id for the experiment
     :param form: ExperimentalConditionForm for the addition of the experimental condition
     :return: context_dict:  The context dictionary for the page
     """
 
-    experiment = Experiment.objects.get(pk=experiment_name_id)
+    experiment = Experiment.objects.get(pk=experiment_id)
     context_dict = {
         'experimental_condition_form': form,
         'experiment': experiment,
@@ -107,17 +107,17 @@ def get_add_experimental_condition_context_dict(experiment_name_id, form):
     return context_dict
 
 
-def get_condition_summary_context_dict(experiment_name_id, condition_name_id):
+def get_condition_summary_context_dict(experiment_id, condition_id):
     """
     Method to generate the context dictionary for the 'Condition Summary' page
-    :param experiment_name_id: String containing the unique id for the experiment
-    :param condition_name_id: String containing the unique id for the condition
+    :param experiment_id: String containing the unique id for the experiment
+    :param condition_id: String containing the unique id for the condition
     :return: context_dict:  The context dictionary for the page
     """
 
     # Derive the experiment, experimental conditions, samples and sample files for the page
-    experiment = Experiment.objects.get(pk=experiment_name_id)
-    experimental_condition = ExperimentalCondition.objects.get(pk=condition_name_id)
+    experiment = Experiment.objects.get(pk=experiment_id)
+    experimental_condition = ExperimentalCondition.objects.get(pk=condition_id)
     samples = Sample.objects.filter(experimental_condition=experimental_condition)
     files = SampleFile.objects.filter(sample=samples)
     context_dict = {
@@ -129,18 +129,18 @@ def get_condition_summary_context_dict(experiment_name_id, condition_name_id):
     return context_dict
 
 
-def get_add_sample_context_dict(experiment_name_id, condition_name_id, sample_form):
+def get_add_sample_context_dict(experiment_id, condition_id, sample_form):
     """
     Method to generate the context_dictionary for the 'Add Sample' page
-    :param experiment_name_id: String containing the unique id for the experiment
-    :param condition_name_id: String containing the unique id for the condition
+    :param experiment_id: String containing the unique id for the experiment
+    :param condition_id: String containing the unique id for the condition
     :param sample_form: SampleForm for the addition of a sample
     :return: context_dict:  The context dictionary for the page
     """
 
     # Derive both the experiment and experimental conditions for the experiment
-    experiment = Experiment.objects.get(pk=experiment_name_id)
-    condition = ExperimentalCondition.objects.get(pk=condition_name_id)
+    experiment = Experiment.objects.get(pk=experiment_id)
+    condition = ExperimentalCondition.objects.get(pk=condition_id)
     context_dict = {
         'experiment': experiment,
         'condition': condition,
@@ -149,19 +149,19 @@ def get_add_sample_context_dict(experiment_name_id, condition_name_id, sample_fo
     return context_dict
 
 
-def get_add_sample_file_context_dict(experiment_name_id, condition_name_id, sample_id, sample_file_form):
+def get_add_sample_file_context_dict(experiment_id, condition_id, sample_id, sample_file_form):
     """
     Method to create the context dictionary for the 'Add Sample File' page
-    :param experiment_name_id: String containing the unique id for the experiment
-    :param condition_name_id: String containing the unique id for the experimental condition
+    :param experiment_id: String containing the unique id for the experiment
+    :param condition_id: String containing the unique id for the experimental condition
     :param sample_id: String containing the unique id for the experimental sample
     :param sample_file_form: SampleFileForm for the addition of an experimental sample
     :return: context_dict:  The context dictionary for the page
     """
 
     # The context dictionary includes the experiment, the condition, the sample and the file form
-    experiment = Experiment.objects.get(pk=experiment_name_id)
-    experimental_condition = ExperimentalCondition.objects.get(pk=condition_name_id)
+    experiment = Experiment.objects.get(pk=experiment_id)
+    experimental_condition = ExperimentalCondition.objects.get(pk=condition_id)
     sample = Sample.objects.get(pk=sample_id)
     context_dict = {
         'experiment': experiment,
@@ -172,15 +172,15 @@ def get_add_sample_file_context_dict(experiment_name_id, condition_name_id, samp
     return context_dict
 
 
-def get_create_fragmentation_set_context_dict(experiment_name_id, form):
+def get_create_fragmentation_set_context_dict(experiment_id, form):
     """
     Method to generate the context dictionary for the 'Create Fragmentation Set' page
-    :param experiment_name_id:    String containing the unique id for the experiment
+    :param experiment_id:    String containing the unique id for the experiment
     :param form:    FragmentationSetForm for the addition of a new fragmentation set
     :return: context_dict:  The context dictionary for the page
     """
 
-    experiment = Experiment.objects.get(pk=experiment_name_id)
+    experiment = Experiment.objects.get(pk=experiment_id)
     context_dict = {
         'frag_set_form': form,
         'experiment': experiment
@@ -209,17 +209,17 @@ def get_fragmentation_set_summary_context_dict(user):
     return context_dict
 
 
-def get_fragmentation_set_context_dict(fragmentation_set_name_id, annotation_tool_selection_form):
+def get_fragmentation_set_context_dict(fragmentation_set_id, annotation_tool_selection_form):
     """
     Method to generate the context dictionary for the 'Fragmentation Set' page
-    :param fragmentation_set_name_id: String containing the unique id for the fragmentation set
+    :param fragmentation_set_id: String containing the unique id for the fragmentation set
     :param annotation_tool_selection_form: AnnotationToolSelectionForm for the user to select an annotation tool
     for generating new AnnotationQueries
     :return: context_dict:  The context dictionary for the page
     """
 
     # Get the corresponding Fragmentation Set
-    fragmentation_set_object = FragmentationSet.objects.get(pk=fragmentation_set_name_id)
+    fragmentation_set_object = FragmentationSet.objects.get(pk=fragmentation_set_id)
     # Determine the MS1 peaks for display
     ms1_peaks = Peak.objects.filter(fragmentation_set=fragmentation_set_object, msn_level=1)
     number_of_ms1_peaks = len(ms1_peaks)
@@ -243,17 +243,17 @@ def get_fragmentation_set_context_dict(fragmentation_set_name_id, annotation_too
     return context_dict
 
 
-def get_peak_summary_context_dict(fragmentation_set_name_id, peak_name_id):
+def get_peak_summary_context_dict(fragmentation_set_id, peak_id):
     """
     Method to generate the context dictionary for the 'Peak Summary' page
-    :param fragmentation_set_name_id: String containing the unique id of the fragmentation set
-    :param peak_name_id:  String containing the unique id of the Peak
+    :param fragmentation_set_id: String containing the unique id of the fragmentation set
+    :param peak_id:  String containing the unique id of the Peak
     :return: context_dict:  The context dictionary for the page
     """
 
     # Retrieve the Fragmentation Set and Peak for the page
-    fragmentation_set_object = FragmentationSet.objects.get(pk=fragmentation_set_name_id)
-    peak = Peak.objects.get(pk=peak_name_id, fragmentation_set=fragmentation_set_object)
+    fragmentation_set_object = FragmentationSet.objects.get(pk=fragmentation_set_id)
+    peak = Peak.objects.get(pk=peak_id, fragmentation_set=fragmentation_set_object)
     # Get all peaks which comprise the fragmentation spectrum of the peak
     fragmentation_spectra = Peak.objects.filter(parent_peak=peak).order_by('mass')
 
@@ -301,17 +301,17 @@ def get_peak_summary_context_dict(fragmentation_set_name_id, peak_name_id):
     return context_dict
 
 
-def get_define_annotation_query_context_dict(fragmentation_set_name_id, form, annotation_tool_id):
+def get_define_annotation_query_context_dict(fragmentation_set_id, form, annotation_tool_id):
     """
     Method to generate the context dictionary for the 'Define Annotation Query' page
-    :param fragmentation_set_name_id: String containing the unique id of the Fragmentation Set
+    :param fragmentation_set_id: String containing the unique id of the Fragmentation Set
     :param form:    Subclass of the AnnotationQueryForm specific to the AnnotationTool selected
     :param annotation_tool_id:    String containing the unique id of the AnnotationTool
     :return: context_dict:  The context dictionary for the page
     """
 
     # Get both the FragmentationSet and the AnnotationTool from the database
-    fragmentation_set_object = FragmentationSet.objects.get(pk=fragmentation_set_name_id)
+    fragmentation_set_object = FragmentationSet.objects.get(pk=fragmentation_set_id)
     annotation_tool = AnnotationTool.objects.get(pk=annotation_tool_id)
     context_dict = {
         'annotation_query_form': form,
@@ -321,19 +321,19 @@ def get_define_annotation_query_context_dict(fragmentation_set_name_id, form, an
     return context_dict
 
 
-def get_specify_preferred_annotation_context_dict(fragmentation_set_name_id, peak_name_id, annotation_id, form):
+def get_specify_preferred_annotation_context_dict(fragmentation_set_id, peak_id, annotation_id, form):
     """
     Method to generate the context dictionary for the 'Specify Preferred Annotation' page
-    :param fragmentation_set_name_id: String containing the unique id of the fragmentation set
-    :param peak_name_id:  String containing the unique id of the peak
+    :param fragmentation_set_id: String containing the unique id of the fragmentation set
+    :param peak_id:  String containing the unique id of the peak
     :param annotation_id: String containing the unique 'id' of the annotation
     :param form: PreferredAnnotationForm for the addition of a justification for selection
     :return: context_dict:  The context dictionary for the page
     """
 
     # Get the fragmentation set, the peak and the annotation object for the page
-    fragmentation_set_object = FragmentationSet.objects.get(pk=fragmentation_set_name_id)
-    peak_object = Peak.objects.get(pk=peak_name_id)
+    fragmentation_set_object = FragmentationSet.objects.get(pk=fragmentation_set_id)
+    peak_object = Peak.objects.get(pk=peak_id)
     annotation_object = CandidateAnnotation.objects.get(id=annotation_id)
     context_dict = {
         'fragmentation_set': fragmentation_set_object,
@@ -410,7 +410,6 @@ def add_experiment(request):
         return render(request, 'frank/add_experiment.html', context_dict)
 
 
-
 @login_required
 def get_chemspider_info(request, compound_id):
 
@@ -435,11 +434,11 @@ def get_chemspider_info(request, compound_id):
 
 
 @login_required
-def experiment_summary(request, experiment_name_id):
+def experiment_summary(request, experiment_id):
     """
     View to render the 'Experiment' page
     :param request: Get request for the 'Experiment' page
-    :param experiment_name_id: String containing the unique id of the experiment
+    :param experiment_id: String containing the unique id of the experiment
     :return: render:    Render frank/experiment.html
     """
 
@@ -448,17 +447,17 @@ def experiment_summary(request, experiment_name_id):
 
 
 @login_required
-def add_experimental_condition(request, experiment_name_id):
+def add_experimental_condition(request, experiment_id):
     """
     View to render the 'Add Experiment' page, adding experimental conditions
     to an associated experiment.
     :param request: Get or POST request posted to the 'Add Experimental Condition' page
-    :param experiment_name_id:    String containing the unique id for the associated experiment
+    :param experiment_id:    String containing the unique id for the associated experiment
     :return: render:    Either renders 'frank/experiment.html' or 'frank/add_experimental_condition.html'
     """
 
     # Get the experiment the experimental condition is to be associated to
-    experiment = Experiment.objects.get(pk=experiment_name_id)
+    experiment = Experiment.objects.get(pk=experiment_id)
     # If the request is a POST
     if request.method == 'POST':
         # Retrieve the completed form
@@ -472,17 +471,17 @@ def add_experimental_condition(request, experiment_name_id):
             # Commit to the database
             condition.save()
             # Get the context dictionary and render the experiment page
-            context_dict = get_experiment_summary_context_dict(experiment_name_id)
+            context_dict = get_experiment_summary_context_dict(experiment_id)
             return render(request, 'frank/experiment.html', context_dict)
         else:
             # if the form has errors, render the add_experimental_condition page, displaying the form errors
-            context_dict = get_add_experimental_condition_context_dict(experiment_name_id, form)
+            context_dict = get_add_experimental_condition_context_dict(experiment_id, form)
             return render(request, 'frank/add_experimental_condition.html', context_dict)
     else:
         # If the request is a Get request, then create a new form
         form = ExperimentalConditionForm()
         # Get the context dictionary and render the 'add_experimental_condition' page
-        context_dict = get_add_experimental_condition_context_dict(experiment_name_id, form)
+        context_dict = get_add_experimental_condition_context_dict(experiment_id, form)
         return render(request, 'frank/add_experimental_condition.html', context_dict)
 
 
@@ -491,27 +490,27 @@ def condition_summary(request, experiment_name_id, condition_name_id):
     """
     View to display an experimental condition, the 'Condition' page
     :param request: Get request for the 'Condition' page
-    :param experiment_name_id: String containing the unique id for the experiment
-    :param condition_name_id: String containing the unique id for the condition
+    :param experiment_id: String containing the unique id for the experiment
+    :param condition_id: String containing the unique id for the condition
     :return: render(request, 'frank/condition.html', context_dict)
     """
 
-    context_dict = get_condition_summary_context_dict(experiment_name_id, condition_name_id)
+    context_dict = get_condition_summary_context_dict(experiment_id, condition_id)
     return render(request, 'frank/condition.html', context_dict)
 
 
 @login_required
-def add_sample(request, experiment_name_id, condition_name_id):
+def add_sample(request, experiment_id, condition_id):
     """
     View to add a sample to an experimental condition, rendering the 'Add Sample' page
     :param request: Get request for the 'Add Sample' page
-    :param experiment_name_id: String containing the unique
-    :param condition_name_id: String containing the unique id for the condition
+    :param experiment_id: String containing the unique
+    :param condition_id: String containing the unique id for the condition
     :return: render:    Either the 'condition.html' or 'add_sample.html' page
     """
 
     # Retrieve the experimental condition from the database
-    experimental_condition = ExperimentalCondition.objects.get(pk=condition_name_id)
+    experimental_condition = ExperimentalCondition.objects.get(pk=condition_id)
     # If the request is a POST
     if request.method == 'POST':
         # Extract the user completed form from the POST request
@@ -525,27 +524,27 @@ def add_sample(request, experiment_name_id, condition_name_id):
             # Commit the sample to the database
             sample.save()
             # Get the context diction and render the condition page
-            context_dict = get_condition_summary_context_dict(experiment_name_id, condition_name_id)
+            context_dict = get_condition_summary_context_dict(experiment_id, condition_id)
             return render(request, 'frank/condition.html', context_dict)
         else:
             # If the form has errors, then render the 'add_sample' page displaying the form errors
-            context_dict = get_add_sample_context_dict(experiment_name_id, condition_name_id, sample_form)
+            context_dict = get_add_sample_context_dict(experiment_id, condition_id, sample_form)
             return render(request, 'frank/add_sample.html', context_dict)
     else:
         # If the request is a Get request, then create a new SampleForm
         sample_form = SampleForm()
         # render the 'add_sample' page displaying the new form
-        context_dict = get_add_sample_context_dict(experiment_name_id, condition_name_id, sample_form)
+        context_dict = get_add_sample_context_dict(experiment_id, condition_id, sample_form)
         return render(request, 'frank/add_sample.html', context_dict)
 
 
 @login_required
-def add_sample_file(request, experiment_name_id, condition_name_id, sample_id):
+def add_sample_file(request, experiment_id, condition_id, sample_id):
     """
     View to add a sample file to a sample, rendering the 'Add Sample File' page
     :param request: Either a Get or Post request to the 'Add Sample File' page
-    :param experiment_name_id: String containing the unique id of the experiment
-    :param condition_name_id: String containing the unique id of the condition
+    :param experiment_id: String containing the unique id of the experiment
+    :param condition_id: String containing the unique id of the condition
     :param sample_id: String containing the unique id of the sample
     :return: render:    Either the 'condition' page or the 'add_sample_file' page
     """
@@ -570,7 +569,7 @@ def add_sample_file(request, experiment_name_id, condition_name_id, sample_id):
                 with transaction.atomic():
                     new_sample_file.save()
                 # if the new_sample_file is validated, then render the 'condition' page
-                context_dict = get_condition_summary_context_dict(experiment_name_id, condition_name_id)
+                context_dict = get_condition_summary_context_dict(experiment_id, condition_id)
                 return render(request, 'frank/condition.html', context_dict)
             except ValidationError:
                 # Validation error will result from an attempt to add a duplicate
@@ -581,8 +580,8 @@ def add_sample_file(request, experiment_name_id, condition_name_id, sample_id):
                 # Render the 'add_sample_file' page to the user, indicating
                 # that duplicate files cannot be added to the same sample
                 context_dict = get_add_sample_file_context_dict(
-                    experiment_name_id,
-                    condition_name_id,
+                    experiment_id,
+                    condition_id,
                     sample_id,
                     sample_file_form
                 )
@@ -591,8 +590,8 @@ def add_sample_file(request, experiment_name_id, condition_name_id, sample_id):
             # If the form itself contains errors (such as not including a file for upload)
             # then render the 'add_sample_file' page indicating errors in the form
             context_dict = get_add_sample_file_context_dict(
-                experiment_name_id,
-                condition_name_id,
+                experiment_id,
+                condition_id,
                 sample_id,
                 sample_file_form
             )
@@ -602,8 +601,8 @@ def add_sample_file(request, experiment_name_id, condition_name_id, sample_id):
         sample_file_form = SampleFileForm()
         # Render the 'add_sample_file' page, displaying the new form
         context_dict = get_add_sample_file_context_dict(
-            experiment_name_id,
-            condition_name_id,
+            experiment_id,
+            condition_id,
             sample_id,
             sample_file_form
         )
@@ -611,15 +610,15 @@ def add_sample_file(request, experiment_name_id, condition_name_id, sample_id):
 
 
 @login_required
-def create_fragmentation_set(request, experiment_name_id):
+def create_fragmentation_set(request, experiment_id):
     """
     View to create a new fragmentation set, via the 'Create Fragmentation Set' page
     :param request: Either a Get or POST request for the 'create_fragmentation_set' page
-    :param experiment_name_id: String containing the unique id of the experiment
+    :param experiment_id: String containing the unique id of the experiment
     :return: render:    Either the 'experiment.html' or 'create_fragmentation_set.html' pages
     """
 
-    experiment = Experiment.objects.get(pk=experiment_name_id)
+    experiment = Experiment.objects.get(pk=experiment_id)
     # Check if the request is a POST
     if request.method == 'POST':
         # Extract the form from the POST request
@@ -640,27 +639,27 @@ def create_fragmentation_set(request, experiment_name_id):
             # be added to the database
             if num_source_files > 0:
                 new_fragmentation_set.save()              # Begin the background process of deriving the peaks from the sample files
-                input_peak_list_to_database(experiment_name_id, new_fragmentation_set.id)
+                input_peak_list_to_database(experiment_id, new_fragmentation_set.id)
                 # Redirect to the the experiment page, which should display the new fragmentation set
-                url = reverse('experiment_summary', kwargs={'experiment_name_id': experiment_name_id})
+                url = reverse('experiment_summary', kwargs={'experiment_name_id': experiment_id})
                 return HttpResponseRedirect(url)
             else:
                 # However, if there are no sample files uploaded, then an error is added to the form
                 fragment_set_form.add_error("name", "No source files found for experiment.")
                 # Which is then displayed to the user
-                context_dict = get_create_fragmentation_set_context_dict(experiment_name_id, fragment_set_form)
+                context_dict = get_create_fragmentation_set_context_dict(experiment_id, fragment_set_form)
                 return render(request, 'frank/create_fragmentation_set.html', context_dict)
         else:
             # If the form itself contains an error (such as the existance of duplicate name)
             # Render the form, displaying the errors back to the user
-            context_dict = get_create_fragmentation_set_context_dict(experiment_name_id, fragment_set_form)
+            context_dict = get_create_fragmentation_set_context_dict(experiment_id, fragment_set_form)
             return render(request, 'frank/create_fragmentation_set.html', context_dict)
     else:
         # If the request was a Get request, then create a new form
 
         fragment_set_form = FragmentationSetForm()
         # Render the new form on the 'create_fragmentation_set' page
-        context_dict = get_create_fragmentation_set_context_dict(experiment_name_id, fragment_set_form)
+        context_dict = get_create_fragmentation_set_context_dict(experiment_id, fragment_set_form)
         return render(request, 'frank/create_fragmentation_set.html', context_dict)
 
 
@@ -678,12 +677,12 @@ def fragmentation_set_summary(request):
 
 
 @login_required
-def fragmentation_set(request, fragmentation_set_name_id):
+def fragmentation_set(request, fragmentation_set_id):
     """
     View to display the contents of a fragmentation set. The page, 'fragmentation_set.html',
     also provides a form for the selection of an AnnotationTool for creating a query.
     :param request: A Get or POST request to the 'Fragmentation Set' page
-    :param fragmentation_set_name_id: A string containing the unique id of the Fragmentation Set
+    :param fragmentation_set_id: A string containing the unique id of the Fragmentation Set
     :return: render:    Either the 'define_annotation_query.html' or 'fragmentation_set.html' pages
     """
 
@@ -691,7 +690,7 @@ def fragmentation_set(request, fragmentation_set_name_id):
     if request.method == 'POST':
         # Derive the form from the request
         annotation_tool_selection_form = AnnotationToolSelectionForm(request.POST)
-        experiment = FragmentationSet.objects.get(pk=fragmentation_set_name_id).experiment
+        experiment = FragmentationSet.objects.get(pk=fragmentation_set_id).experiment
         # Check the form is valid
         if annotation_tool_selection_form.is_valid():
             # The annotation_tool_selection form does not directly, correspond to a model
@@ -712,17 +711,17 @@ def fragmentation_set(request, fragmentation_set_name_id):
             elif user_tool_choice == 'LCMS DDA Network Sampler':
                 annotation_query_form = NetworkSamplerForm()
             elif user_tool_choice == 'Precursor Mass Filter':
-                annotation_query_form = PrecursorMassFilterForm(fragmentation_set_name_id)
+                annotation_query_form = PrecursorMassFilterForm(fragmentation_set_id)
             elif user_tool_choice == 'Clean Annotations':
-                annotation_query_form = CleanFilterForm(fragmentation_set_name_id)
+                annotation_query_form = CleanFilterForm(fragmentation_set_id)
             elif user_tool_choice == 'Network Sampler':
-                annotation_query_form = NetworkSamplerForm(fragmentation_set_name_id)
+                annotation_query_form = NetworkSamplerForm(fragmentation_set_id)
 
             # For the context dictionary, the annotation tool id is required to render the page
             annotation_tool_id = AnnotationTool.objects.get(name=user_tool_choice).id
             # redirect the user to the 'define_annotation_query' page which displays the form
             context_dict = get_define_annotation_query_context_dict(
-                fragmentation_set_name_id,
+                fragmentation_set_id,
                 annotation_query_form,
                 annotation_tool_id
             )
@@ -730,48 +729,48 @@ def fragmentation_set(request, fragmentation_set_name_id):
         else:
             # If the form is not valid (i.e. the choice of tool doesn't correspond to an AnnotationTool in the database)
             context_dict = get_fragmentation_set_context_dict(
-                fragmentation_set_name_id,
+                fragmentation_set_id,
                 annotation_tool_selection_form
             )
             return render(request, 'frank/fragmentation_set.html', context_dict)
     else:
         # In the case of a Get request, the 'fragmentation set' page is simply
         # rendered containing a new AnnotationToolSelectionForm
-        fragmentation_set = FragmentationSet.objects.get(pk=fragmentation_set_name_id)
+        fragmentation_set = FragmentationSet.objects.get(pk=fragmentation_set_id)
         experiment = fragmentation_set.experiment
         form = AnnotationToolSelectionForm(experiment_object=experiment)
-        context_dict = get_fragmentation_set_context_dict(fragmentation_set_name_id, form)
+        context_dict = get_fragmentation_set_context_dict(fragmentation_set_id, form)
         return render(request, 'frank/fragmentation_set.html', context_dict)
 
 
 @login_required
-def peak_summary(request, fragmentation_set_name_id, peak_name_id):
+def peak_summary(request, fragmentation_set_id, peak_id):
     """
     View to display the fragmentation spectra of a peak and any candidate annotations
     on the 'Peak Summary' page.
     :param request: A Get request for the 'Peak Summary' page
-    :param fragmentation_set_name_id: A string containing the unique id of the fragmentation set
-    :param peak_name_id:  A string containing the unique id of the peak
+    :param fragmentation_set_id: A string containing the unique id of the fragmentation set
+    :param peak_id:  A string containing the unique id of the peak
     :return: render(request, 'frank/peak_summary.html', context_dict)
     """
 
-    context_dict = get_peak_summary_context_dict(fragmentation_set_name_id, peak_name_id)
+    context_dict = get_peak_summary_context_dict(fragmentation_set_id, peak_id)
     return render(request, 'frank/peak_summary.html', context_dict)
 
 
 @login_required
-def define_annotation_query(request, fragmentation_set_name_id, annotation_tool_id):
+def define_annotation_query(request, fragmentation_set_id, annotation_tool_id):
     """
     View to specify the search parameters of an AnnotationQuery, via the
     'define_annotation_query' page.
     :param request:     Either a Get or POST request for the 'Define Annotation Query' page
-    :param fragmentation_set_name_id: A string containing the unique id of the fragmentation set
+    :param fragmentation_set_id: A string containing the unique id of the fragmentation set
     :param annotation_tool_id: A string containing the unique id of the annotation tool
     :return: render:    Either the 'fragmentation_set.html' or 'define_annotation_query.html' page
     """
 
     # Get the fragmentation set, annotation tool and experiment for the query
-    fragmentation_set_object = FragmentationSet.objects.get(id=fragmentation_set_name_id)
+    fragmentation_set_object = FragmentationSet.objects.get(id=fragmentation_set_id)
     print annotation_tool_id
     annotation_tool = AnnotationTool.objects.get(id=annotation_tool_id)
     annotation_query_form = None
@@ -790,11 +789,11 @@ def define_annotation_query(request, fragmentation_set_name_id, annotation_tool_
         elif annotation_tool.name == 'LCMS DDA Network Sampler':
             annotation_query_form = NetworkSamplerForm(request.POST)
         elif annotation_tool.name == 'Precursor Mass Filter':
-            annotation_query_form = PrecursorMassFilterForm(fragmentation_set_name_id,request.POST)
+            annotation_query_form = PrecursorMassFilterForm(fragmentation_set_id, request.POST)
         elif annotation_tool.name == 'Clean Annotations':
-            annotation_query_form = CleanFilterForm(fragmentation_set_name_id,request.POST)
+            annotation_query_form = CleanFilterForm(fragmentation_set_id, request.POST)
         elif annotation_tool.name == 'Network Sampler':
-            annotation_query_form = NetworkSamplerForm(fragmentation_set_name_id,request.POST)
+            annotation_query_form = NetworkSamplerForm(fragmentation_set_id, request.POST)
 
         # Check that the form is valid
         if annotation_query_form.is_valid():
@@ -824,12 +823,12 @@ def define_annotation_query(request, fragmentation_set_name_id, annotation_tool_
             # Finally, begin running the retrieval of the annotations as a background process
             generate_annotations(paramaterised_query_object,user = request.user)
             # Redirect the user to their 'fragmentation_set' page
-            url = reverse('fragmentation_set', kwargs={'fragmentation_set_name_id': fragmentation_set_name_id})
+            url = reverse('fragmentation_set', kwargs={'fragmentation_set_name_id': fragmentation_set_id})
             return HttpResponseRedirect(url)
         else:
             # If the form is invalid then display the form errors back to the user
             context_dict = get_define_annotation_query_context_dict(
-                fragmentation_set_name_id,
+                fragmentation_set_id,
                 annotation_query_form,
                 annotation_tool_id
             )
@@ -848,14 +847,14 @@ def define_annotation_query(request, fragmentation_set_name_id, annotation_tool_
         elif annotation_tool.name == 'LCMS DDA Network Sampler':
             annotation_query_form = NetworkSamplerForm()
         elif annotation_tool.name == 'Precursor Mass Filter':
-            annotation_query_form = PrecursorMassFilterForm(fragmentation_set_name_id)
+            annotation_query_form = PrecursorMassFilterForm(fragmentation_set_id)
         elif annotation_tool.name == 'Clean Annotations':
-            annotation_query_form = CleanFilterForm(fragmentation_set_name_id)
+            annotation_query_form = CleanFilterForm(fragmentation_set_id)
         elif annotation_tool.name == 'Network Sampler':
-            annotation_query_form = NetworkSamplerForm(fragmentation_set_name_id)
+            annotation_query_form = NetworkSamplerForm(fragmentation_set_id)
 
         context_dict = get_define_annotation_query_context_dict(
-            fragmentation_set_name_id,
+            fragmentation_set_id,
             annotation_query_form,
             annotation_tool_id
         )
@@ -863,13 +862,13 @@ def define_annotation_query(request, fragmentation_set_name_id, annotation_tool_
 
 
 @login_required
-def specify_preferred_annotation(request, fragmentation_set_name_id, peak_name_id, annotation_id):
+def specify_preferred_annotation(request, fragmentation_set_id, peak_id, annotation_id):
     """
     View to select a preferred candidate annotation from those associated with
     a given peak.
     :param request: Either a Get or POST request for the page
-    :param fragmentation_set_name_id: A string containing the unique id of the fragmentation set
-    :param peak_name_id: A string containing the unique id of the peak
+    :param fragmentation_set_id: A string containing the unique id of the fragmentation set
+    :param peak_id: A string containing the unique id of the peak
     :param annotation_id: Integer for the unique primary key of the candidate annotation
     :return: render:    Either the 'peak_summary' or 'specify_preferred_annotation' page
     """
@@ -889,7 +888,7 @@ def specify_preferred_annotation(request, fragmentation_set_name_id, peak_name_i
             current_time = datetime.datetime.now()
             annotation_object = CandidateAnnotation.objects.get(id=annotation_id)
             # Then update the peak, to include the preferred annotation
-            peak_for_update = Peak.objects.get(pk=peak_name_id)
+            peak_for_update = Peak.objects.get(pk=peak_id)
             peak_for_update.preferred_candidate_annotation = annotation_object
             peak_for_update.preferred_candidate_description = justification_for_annotation
             peak_for_update.preferred_candidate_user_selector = current_user
@@ -897,13 +896,13 @@ def specify_preferred_annotation(request, fragmentation_set_name_id, peak_name_i
             with transaction.atomic():
                 peak_for_update.save()
             # Return the user to the 'peak_summary' page
-            context_dict = get_peak_summary_context_dict(fragmentation_set_name_id, peak_name_id)
+            context_dict = get_peak_summary_context_dict(fragmentation_set_id, peak_id)
             return render(request, 'frank/peak_summary.html', context_dict)
         else:
             # If the form is invalid, then render the errors back to the user
             context_dict = get_specify_preferred_annotation_context_dict(
-                fragmentation_set_name_id,
-                peak_name_id,
+                fragmentation_set_id,
+                peak_id,
                 annotation_id,
                 preferred_annotation_form
             )
@@ -912,8 +911,8 @@ def specify_preferred_annotation(request, fragmentation_set_name_id, peak_name_i
         # If the request is a Get request, then create a new PreferredAnnotationForm and render the page
         preferred_annotation_form = PreferredAnnotationForm()
         context_dict = get_specify_preferred_annotation_context_dict(
-            fragmentation_set_name_id,
-            peak_name_id,
+            fragmentation_set_id,
+            peak_id,
             annotation_id,
             preferred_annotation_form
         )
@@ -926,21 +925,21 @@ Typically, these relate to the background processes but are not themselves
 run in the background.
 """
 
-def input_peak_list_to_database(experiment_name_id, fragmentation_set_id, ms1_peaks=None):
-    taskSignature = input_peak_list_to_database_signature(experiment_name_id, fragmentation_set_id, ms1_peaks)
+def input_peak_list_to_database(experiment_id, fragmentation_set_id, ms1_peaks=None):
+    taskSignature = input_peak_list_to_database_signature(experiment_id, fragmentation_set_id, ms1_peaks)
     taskSignature.apply_async()
 
-def input_peak_list_to_database_signature(experiment_name_id, fragmentation_set_id, ms1_peaks=None):
+def input_peak_list_to_database_signature(experiment_id, fragmentation_set_id, ms1_peaks=None):
 
     """
     Method to start the extraction of peaks from the uploaded mzML data files
-    :param experiment_name_id: A string containing the unique id of an experiment
+    :param experiment_id: A string containing the unique id of an experiment
     :param fragmentation_set_id: Integer id of the fragmentation set
     :param ms1_peaks: Table of MS1 peaks
     ms1_peaks will be none if this method is called from Frank, and will have a dataframe from Pimp
     """
     logger.info("In the modified peak list signature method")
-    retval = tasks.msn_generate_peak_list.si(experiment_name_id, fragmentation_set_id, ms1_peaks)
+    retval = tasks.msn_generate_peak_list.si(experiment_id, fragmentation_set_id, ms1_peaks)
     return retval
 
 def generate_annotations(annotation_query_object,user = None):
@@ -1153,24 +1152,24 @@ def set_annotation_query_parameters(annotation_query_object, annotation_query_fo
     # End of Simon contribution
 
 @login_required
-def delete_annotation_query(request,fragmentation_set_name_id,annotation_query_id):
+def delete_annotation_query(request,fragmentation_set_id,annotation_query_id):
     annotation_query = AnnotationQuery.objects.get(pk = annotation_query_id)
     annotation_query.delete()
-    return fragmentation_set(request,fragmentation_set_name_id)
+    return fragmentation_set(request,fragmentation_set_id)
 
 @login_required
-def remove_preferred_annotations(request,fragmentation_set_name_id):
+def remove_preferred_annotations(request,fragmentation_set_id):
     # Removes all of the preferred annotations for a particular fragmentation set
     # Then returns to the fragmentation_set view
     # This should perhaps be a celery task?
-    this_fragmentation_set = FragmentationSet.objects.get(pk = fragmentation_set_name_id)
+    this_fragmentation_set = FragmentationSet.objects.get(pk = fragmentation_set_id)
     peaks = Peak.objects.filter(fragmentation_set = this_fragmentation_set,
                                 preferred_candidate_annotation__isnull = False,
                                 msn_level = 1)
     for peak in peaks:
         remove_preferred_annotation(peak)
         peak.save()
-    return fragmentation_set(request,fragmentation_set_name_id)
+    return fragmentation_set(request,fragmentation_set_id)
 
 def remove_preferred_annotation(peak):
     peak.preferred_candidate_annotation = None
@@ -1179,15 +1178,15 @@ def remove_preferred_annotation(peak):
     peak.preferred_candidate_updated_date = None
 
 @login_required
-def get_fragments_as_text(request,peak_name_id,format_type):
+def get_fragments_as_text(request, peak_id, format_type='list'):
 
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="{}.csv"'.format(peak_name_id)
+    response['Content-Disposition'] = 'attachment; filename="{}.csv"'.format(peak_id)
 
     writer = csv.writer(response)
 
     # Get the peak
-    peak = Peak.objects.get(pk=peak_name_id)
+    peak = Peak.objects.get(pk=peak_id)
     # Get the peak's children
     children = Peak.objects.filter(parent_peak=peak).order_by('mass')
     # Find most intense
@@ -1201,9 +1200,9 @@ def get_fragments_as_text(request,peak_name_id,format_type):
             writer.writerow([fragment.mass,100.0*float(fragment.intensity)/max_intensity])
     elif format_type == 'mona':
         to_write = []
-        writer = csv.writer(response,delimiter=' ')
+        writer = csv.writer(response, delimiter=' ')
         for fragment in children:
-            to_write.append('{}:{}'.format(fragment.mass,100.0*float(fragment.intensity)/max_intensity))
+            to_write.append('{}:{}'.format(fragment.mass, 100.0*float(fragment.intensity)/max_intensity))
         writer.writerow(to_write)
 
     return response
@@ -1229,25 +1228,25 @@ def run_network_sampler(request):
     aq = AnnotationQuery.objects.get(pk=aq_id)
     fs = FragmentationSet.objects.get(pk=frag_id)
 
-    pq,created = AnnotationQuery.objects.get_or_create(name='posterior',fragmentation_set=fs,
-        massBank='False',massBank_params=jsonpickle.encode(default_params),parent_annotation_query=aq)
-    edge_dict = tasks.runNetworkSampler.delay(frag_id,'Beer_3_T10_POS.mzXML',pq.id)
+    pq,created = AnnotationQuery.objects.get_or_create(name='posterior', fragmentation_set=fs,
+        massBank='False',massBank_params=jsonpickle.encode(default_params), parent_annotation_query=aq)
+    edge_dict = tasks.runNetworkSampler.delay(frag_id, 'Beer_3_T10_POS.mzXML', pq.id)
     # context_dict = {'edge_dict':  edge_dict}
     # return render(request,'frank/sampler_output.html',context_dict)
     return render(request, 'frank/index.html')
 
 @login_required
-def make_frag_spectra_plot(request, fragmentation_set_name_id, peak_name_id):
+def make_frag_spectra_plot(request, fragmentation_set_id, peak_name_id):
     """
 
     :param request: The request a Get from the 'peak_summary'page
-    :param fragmentation_set_name_id: A string corresponding to the unique id of the fragmentation set
-    :param peak_name_id: A string corresponding to the unique id of a peak
+    :param fragmentation_set_id: A string corresponding to the unique id of the fragmentation set
+    :param peak_id: A string corresponding to the unique id of a peak
     :return: HttpResponse: An image of the graph is returned to the page for rendering
     """
 
     # Get the peak and derive all the peaks which correspond to the fragmentation spectra
-    parent_object = Peak.objects.get(pk=peak_name_id)
+    parent_object = Peak.objects.get(pk=peak_id)
     fragmentation_spectra = Peak.objects.filter(parent_peak=parent_object)
 
     # Derive the mass and intensity of the parent, and the fragments of the spectra

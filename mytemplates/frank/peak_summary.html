@@ -50,7 +50,8 @@
 			{% endfor %}
 		</table>
 	<p style="text-align:center;">
-		Download spectrum as <a href="{% url 'get_fragments_as_text' peak.id 'list' %}">list</a>&nbsp;<a href="{% url 'get_fragments_as_text' peak.id 'mona' %}">mona string</a>
+		Download spectrum as <a href="{% url 'get_fragments_as_text' peak.id %}">list</a>&nbsp;
+		<a href="{% url 'get_fragments_as_text' peak.id 'mona' %}">mona string</a>
 	</p>
 	{% else %}
 		<p>There are no fragments for this peak</p>
